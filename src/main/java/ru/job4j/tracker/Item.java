@@ -6,6 +6,11 @@ public class Item {
     private String id;
     private String name;
 
+    @Override
+    public String toString() {
+        return getName() + " " + getId();
+    }
+
     public Item(String name) {
         this.name = name;
     }
