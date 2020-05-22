@@ -24,15 +24,13 @@ public class ValidateInputTest {
         System.setOut(out);
     }
 
-
-
     @Test
     public void whenMaxInput() {
         ByteArrayOutputStream mem = new ByteArrayOutputStream();
         PrintStream out = System.out;
         System.setOut(new PrintStream(mem));
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"7", "4"})
+                new StubInput(new String[] {"7", "4",})
         );
         input.askInt("Enter", 5);
         assertThat(
