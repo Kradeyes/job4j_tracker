@@ -1,21 +1,13 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Tracker {
 
     /**
      * Массив для хранения заявок.
      */
-    private final Item[] items = new Item[100];
-
-
-    /**
-     * Указатель ячейки для новой заявки.
-     */
-    private int position = 0;
+    private final List<Item> items = new ArrayList<>();
 
     /**
      * Метод добавления заявки в хранилище
@@ -24,7 +16,7 @@ public class Tracker {
      */
     public Item add(Item item) {
         item.setId(generateId());
-        items[position++] = item;
+        items.add(item);
         return item;
     }
 
@@ -44,8 +36,8 @@ public class Tracker {
      *
      * @return массив всех не null элементов.
      */
-    public Item[] findAll() {
-        return Arrays.copyOf(items, position);
+    public List<Item> findAll() {
+        return new ArrayList<>(items);
     }
 
 
@@ -54,16 +46,15 @@ public class Tracker {
      *
      * @return массив элементов совпавших по имени.
      */
-    public Item[] findByName(String key) {
-        Item[] findByName = new Item[position];
-        int size = 0;
-        for (int index = 0; index < position; index++) {
-            Item item = this.items[index];
-            if (item.getName().equals(key)) {
-                findByName[size++] = this.items[index];
+    public List<Item> findByName(String key) {
+        List<Item> rsl = new ArrayList<>();
+        for (Item x : items) {
+            if (x.getName().equals(key)) {
+                rsl.add(x);
+                break;
             }
         }
-        return Arrays.copyOf(findByName, size);
+        return rsl;
     }
 
     /**
@@ -73,7 +64,7 @@ public class Tracker {
      */
     public Item findById(String id) {
         int index = indexOf(id);
-        return index != -1 ? items[index] : null;
+        return index != -1 ? items.get(index) : null;
     }
 
     /**
@@ -83,9 +74,9 @@ public class Tracker {
      */
     private int indexOf(String id) {
         int rsl = -1;
-        for (int index = 0; index < position; index++) {
-            if (items[index].getId().equals(id)) {
-                rsl = index;
+        for (Item item : this.items) {
+            if (item.getId().equals(id)) {
+                rsl = this.items.indexOf(item);
                 break;
             }
         }
@@ -97,10 +88,10 @@ public class Tracker {
      */
     public boolean replace(String id, Item item) {
         int index = indexOf(id);
-        item.setId(id);
         boolean rsl = index != -1;
         if (rsl) {
-            items[index] = item;
+            item.setId(id);
+            this.items.set(index, item);
         }
         return rsl;
     }
@@ -110,16 +101,11 @@ public class Tracker {
      * Метод производит удаление элемента по ключу.
      */
     public boolean delete(String id) {
-        boolean result = false;
         int index = indexOf(id);
         boolean rsl = index != -1;
         if (rsl) {
-            items[index] = null;
-            System.arraycopy(items, index + 1, items, index, position - index);
-            items[position - 1] = null;
-            position--;
-            result = true;
+            this.items.remove(index);
         }
-        return result;
+        return rsl;
     }
 }
