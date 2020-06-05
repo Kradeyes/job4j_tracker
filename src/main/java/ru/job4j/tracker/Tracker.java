@@ -74,12 +74,12 @@ public class Tracker {
      */
     private int indexOf(String id) {
         int rsl = -1;
-        for (Item item : this.items) {
-            if (item.getId().equals(id)) {
-                rsl = this.items.indexOf(item);
-                break;
+        for (int index = 0; index < items.size();index++){
+            if(items.get(index).getId().equals(id)) {
+                rsl = index;
             }
         }
+
         return rsl;
     }
 
