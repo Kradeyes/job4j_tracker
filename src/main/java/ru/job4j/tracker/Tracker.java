@@ -77,6 +77,7 @@ public class Tracker {
         for (int index = 0; index < items.size();index++){
             if(items.get(index).getId().equals(id)) {
                 rsl = index;
+                break;
             }
         }
 
