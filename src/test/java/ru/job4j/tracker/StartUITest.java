@@ -19,7 +19,7 @@ public class StartUITest {
                 new String[] {"0"}
         );
         StubAction action = new StubAction();
-        new StartUI().init(input, new Tracker(), new UserAction[] { action });
+        new StartUI().init(input, new Tracker(), new UserAction[] {action });
         String expect = new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
                 .add("Menu.")
                 .add("0. Stub action")
@@ -34,7 +34,7 @@ public class StartUITest {
                 new String[] {"0"}
         );
         StubAction action = new StubAction();
-        new StartUI().init(input, new Tracker(), new UserAction[] { action });
+        new StartUI().init(input, new Tracker(), new UserAction[] {action });
         assertThat(action.isCall(), is(true));
     }
 
@@ -48,7 +48,6 @@ public class StartUITest {
         Item expected = new Item("Fix PC");
         assertThat(created.getName(), is(expected.getName()));
     }
-
 
     @Test
     public void whenReplaceItem() {
@@ -75,6 +74,4 @@ public class StartUITest {
         assertThat(expected, is(nullValue()));
 
     }*/
-
-
 }

@@ -16,18 +16,16 @@ public class SortTest {
         List<Item> all = new ArrayList<>();
         all.add(new Item("Privet"));
         all.add(new Item("Poka"));
-        Collections.sort(all,new ItemSortAscending());
+        Collections.sort(all, new ItemSortAscending());
         assertThat(all.get(0).getName(), is("Poka"));
     }
-
-
 
     @Test
     public void whenDescending() {
         List<Item> all = new ArrayList<>();
         all.add(new Item("Privet"));
         all.add(new Item("Poka"));
-        Collections.sort(all,new ItemSortDescending());
+        Collections.sort(all, new ItemSortDescending());
         assertThat(all.get(0).getName(), is("Privet"));
     }
 }

@@ -2,7 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.List;
 
-public class ShowAction implements UserAction{
+public class ShowAction implements UserAction {
     @Override
     public String name() {
         return "==== Show All ====";

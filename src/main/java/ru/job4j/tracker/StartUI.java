@@ -2,7 +2,6 @@ package ru.job4j.tracker;
 
 import java.sql.SQLOutput;
 
-
 public class StartUI {
     public void init(Input input, Tracker tracker, UserAction[] actions) {
         boolean run = true;
@@ -26,7 +25,9 @@ public class StartUI {
         Input validate = new ValidateInput(input);
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new CreateAction(), new ShowAction(), new ReplaceAction(), new DeleteAction(), new FindByIdAction(), new FindByNameAction(), new ExitAction()
+                new CreateAction(), new ShowAction(),
+                new ReplaceAction(), new DeleteAction(),
+                new FindByIdAction(), new FindByNameAction(), new ExitAction()
         };
         new StartUI().init(validate, tracker, actions);
     }

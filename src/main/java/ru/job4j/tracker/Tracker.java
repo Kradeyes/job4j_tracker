@@ -22,7 +22,8 @@ public class Tracker {
 
     /**
      * Метод генерирует уникальный ключ для заявки.
-     * Так как у заявки нет уникальности полей, имени и описание. Для идентификации нам нужен уникальный ключ.
+     * Так как у заявки нет уникальности полей, имени и описание.
+     * Для идентификации нам нужен уникальный ключ.
      *
      * @return Уникальный ключ.
      */
@@ -39,7 +40,6 @@ public class Tracker {
     public List<Item> findAll() {
         return new ArrayList<>(items);
     }
-
 
     /**
      * Метод реализует поиск заявок по имени.
@@ -74,8 +74,8 @@ public class Tracker {
      */
     private int indexOf(String id) {
         int rsl = -1;
-        for (int index = 0; index < items.size();index++){
-            if(items.get(index).getId().equals(id)) {
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index).getId().equals(id)) {
                 rsl = index;
                 break;
             }
@@ -96,7 +96,6 @@ public class Tracker {
         }
         return rsl;
     }
-
 
     /**
      * Метод производит удаление элемента по ключу.

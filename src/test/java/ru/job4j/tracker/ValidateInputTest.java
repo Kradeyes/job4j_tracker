@@ -30,7 +30,7 @@ public class ValidateInputTest {
         PrintStream out = System.out;
         System.setOut(new PrintStream(mem));
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"7", "4",})
+                new StubInput(new String[] {"7", "4"})
         );
         input.askInt("Enter", 5);
         assertThat(

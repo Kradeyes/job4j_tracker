@@ -13,9 +13,9 @@ public class ShowActionTest {
 
     @Test
     public void whenCheckOutput() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream(); //создали буффер для хранения
-        PrintStream def = System.out;                            //получили ссылку на вывод в консоль
-        System.setOut(new PrintStream(out));                     //Заменяем стандартный вывод на вывод в пямять для тестирования
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream def = System.out;
+        System.setOut(new PrintStream(out));
         Tracker tracker = new Tracker();
         Item item = new Item("Try it");
         tracker.add(item);
@@ -25,6 +25,6 @@ public class ShowActionTest {
                 .add(item.getName() + " " + item.getId())
                 .toString();
         assertThat(new String(out.toByteArray()), is(expect));
-        System.setOut(def);                                       // возвращаем обратно стандартный вывод в консоль.
+        System.setOut(def);
     }
 }
