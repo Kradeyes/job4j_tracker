@@ -15,10 +15,10 @@ env:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-# Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упала
+# Отправлять уведомление на почту yanin.r.a@mail.ru если сборка упала
 notifications:
   email:
     recipients:
-      -youremail@smtp.ru
+      - yanin.r.a@mail.ru
     on_success: never # default: change
     on_failure: always # defa,,ult: always
