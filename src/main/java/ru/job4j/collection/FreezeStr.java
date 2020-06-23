@@ -8,7 +8,7 @@ public class FreezeStr {
         char[] secondWord = right.toCharArray();
         Arrays.sort(firstWord);
         Arrays.sort(secondWord);
-        if(firstWord.length == secondWord.length) {
+        if (firstWord.length == secondWord.length) {
             return Arrays.equals(firstWord, secondWord);
         }
         return false;
