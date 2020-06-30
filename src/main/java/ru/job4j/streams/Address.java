@@ -2,7 +2,7 @@ package ru.job4j.streams;
 
 import java.util.Objects;
 
-public class Address implements Comparable<Address>{
+public class Address implements Comparable<Address> {
     private String city;
     private String street;
     private int home;
