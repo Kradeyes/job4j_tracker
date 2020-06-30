@@ -19,8 +19,8 @@ public class School {
                 new Student("Ivanova", 70)
         );
         Map<String, Student> map = studentsForMap.stream()
-                                  .distinct()
                                   .collect(Collectors
-                                          .toMap(Student::getSurname, student -> student));
+                                          .toMap(Student::getSurname,
+                                                  student -> student, (oldS, newS) -> oldS));
     }
 }
