@@ -30,7 +30,7 @@ public class BankService {
         Optional<User> user = findByPassport(passport);
         return user.map(value -> users.get(value).stream()
                                     .filter(account -> account.getRequisite().equals(requisite))
-                                    .findFirst().get());
+                                    .findFirst().orElseThrow());
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport,
