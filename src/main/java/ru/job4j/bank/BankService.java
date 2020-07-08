@@ -13,8 +13,9 @@ public class BankService {
     public void addAccount(String passport, Account account) {
         Optional<User> user = findByPassport(passport);
         if (user.isPresent()) {
-            if (!users.get(user.get()).contains(account)) {
-                users.get(user.get()).add(account);
+            List<Account> acc = users.get(user.get());
+            if (!acc.contains(account)) {
+                acc.add(account);
             }
         }
     }
@@ -27,9 +28,9 @@ public class BankService {
 
     public Optional<Account> findByRequisite(String passport, String requisite) {
         Optional<User> user = findByPassport(passport);
-        return user.flatMap(value -> users.get(value).stream()
+        return user.map(value -> users.get(value).stream()
                                     .filter(account -> account.getRequisite().equals(requisite))
-                                    .findFirst());
+                                    .findFirst().get());
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport,
