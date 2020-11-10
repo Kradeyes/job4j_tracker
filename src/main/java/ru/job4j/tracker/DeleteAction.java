@@ -7,15 +7,12 @@ public class DeleteAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Tracker tracker) {
-        System.out.println("=== Replace Item ====");
-        String id = input.askStr("Enter Id: ");
-        String name = input.askStr("Enter name: ");
-        Item item = new Item(name);
-        if (tracker.replace(id, item)) {
-            System.out.println("Replace was successful");
+    public boolean execute(Input input, Store tracker) {
+        String id = input.askStr("Enter id: ");
+        if (tracker.delete(id)) {
+            System.out.println("Item with id: " + id + " was deleted from tracker");
         } else {
-            System.out.println("Replace failed");
+            System.out.println("Item with id: " + id + " wasn't found in the tracker.");
         }
         return true;
     }

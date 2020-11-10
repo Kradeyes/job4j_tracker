@@ -1,9 +1,7 @@
 package ru.job4j.tracker;
 
-import java.sql.SQLOutput;
-
 public class StartUI {
-    public void init(Input input, Tracker tracker, UserAction[] actions) {
+    public void init(Input input, Store tracker, UserAction[] actions) {
         boolean run = true;
         while (run) {
             this.showMenu(actions);
@@ -21,14 +19,19 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        Input input = new ConsoleInput();
-        Input validate = new ValidateInput(input);
-        Tracker tracker = new Tracker();
-        UserAction[] actions = {
-                new CreateAction(), new ShowAction(),
-                new ReplaceAction(), new DeleteAction(),
-                new FindByIdAction(), new FindByNameAction(), new ExitAction()
-        };
-        new StartUI().init(validate, tracker, actions);
+        Input validate = new ValidateInput(
+                new ConsoleInput()
+        );
+        try (Store tracker = new SqlTracker()) {
+            tracker.init();
+            UserAction[] actions = {
+                    new CreateAction(), new ShowAction(),
+                    new ReplaceAction(), new DeleteAction(),
+                    new FindByIdAction(), new FindByNameAction(), new ExitAction()
+            };
+            new StartUI().init(validate, tracker, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -16,7 +16,7 @@ public class ShowActionTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         PrintStream def = System.out;
         System.setOut(new PrintStream(out));
-        Tracker tracker = new Tracker();
+        SqlTracker tracker = new SqlTracker();
         Item item = new Item("Try it");
         tracker.add(item);
         ShowAction act = new ShowAction();

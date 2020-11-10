@@ -2,7 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.*;
 
-public class Tracker {
+public class MemTracker {
 
     /**
      * Массив для хранения заявок.
