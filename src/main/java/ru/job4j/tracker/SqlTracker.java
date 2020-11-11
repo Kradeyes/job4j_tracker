@@ -88,8 +88,9 @@ public class SqlTracker implements Store {
         try(PreparedStatement statement = cn.prepareStatement(findById)) {
             statement.setInt(1,Integer.parseInt(id));
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            item = new Item(resultSet.getString("name"));
+            if (resultSet.next()) {
+                item = new Item(resultSet.getString("name"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
