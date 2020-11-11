@@ -7,14 +7,23 @@ import java.util.List;
 import java.util.Properties;
 
 public class SqlTracker implements Store {
-    private Connection cn;
+
+    private Connection connection;
+
+    SqlTracker() {
+    }
+
+    SqlTracker(Connection connection) {
+        this.connection = connection;
+    }
 
     public void init() {
-        try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = SqlTracker.class.getClassLoader()
+                .getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
-            cn = DriverManager.getConnection(
+            connection = DriverManager.getConnection(
                     config.getProperty("url"),
                     config.getProperty("username"),
                     config.getProperty("password")
@@ -27,7 +36,8 @@ public class SqlTracker implements Store {
     @Override
     public Item add(Item item) {
         String insert = "insert into items(name) values (?)";
-        try (PreparedStatement statement = cn.prepareStatement(insert,Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement statement = this.connection.prepareStatement(insert,
+                Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, item.getName());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -45,7 +55,7 @@ public class SqlTracker implements Store {
     public List<Item> findAll() {
         List<Item> rsl = new ArrayList<>();
         String findAll = "select * from items";
-        try(PreparedStatement statement = cn.prepareStatement(findAll)) {
+        try (PreparedStatement statement = connection.prepareStatement(findAll)) {
             ResultSet resultSet = statement.executeQuery();
             rsl = toList(resultSet);
         } catch (SQLException e) {
@@ -58,9 +68,9 @@ public class SqlTracker implements Store {
     public boolean replace(String id, Item item) {
         int i = 0;
         String replace = "update items set name = ? where id = ?";
-        try (PreparedStatement statement = cn.prepareStatement(replace)) {
-            statement.setString(1,item.getName());
-            statement.setInt(2,Integer.parseInt(id));
+        try (PreparedStatement statement = connection.prepareStatement(replace)) {
+            statement.setString(1, item.getName());
+            statement.setInt(2, Integer.parseInt(id));
             i = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,9 +81,9 @@ public class SqlTracker implements Store {
     @Override
     public boolean delete(String id) {
         int i = 0;
-        String delete = "delete from items where id = ?" ;
-        try (PreparedStatement statement = cn.prepareStatement(delete)) {
-            statement.setInt(1,Integer.parseInt(id));
+        String delete = "delete from items where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(delete)) {
+            statement.setInt(1, Integer.parseInt(id));
             i = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,8 +95,8 @@ public class SqlTracker implements Store {
     public Item findById(String id) {
         Item item = null;
         String findById = "select * from items where id = ?";
-        try(PreparedStatement statement = cn.prepareStatement(findById)) {
-            statement.setInt(1,Integer.parseInt(id));
+        try (PreparedStatement statement = connection.prepareStatement(findById)) {
+            statement.setInt(1, Integer.parseInt(id));
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 item = new Item(resultSet.getString("name"));
@@ -101,8 +111,8 @@ public class SqlTracker implements Store {
     public List<Item> findByName(String key) {
         List<Item> rsl = new ArrayList<>();
         String findByName = "select * from items where name = ?";
-        try(PreparedStatement statement = cn.prepareStatement(findByName)) {
-            statement.setString(1,key);
+        try (PreparedStatement statement = connection.prepareStatement(findByName)) {
+            statement.setString(1, key);
             ResultSet resultSet = statement.executeQuery();
             rsl = toList(resultSet);
         } catch (SQLException e) {
@@ -113,8 +123,8 @@ public class SqlTracker implements Store {
 
     @Override
     public void close() throws Exception {
-        if (cn != null) {
-            cn.close();
+        if (connection != null) {
+            connection.close();
         }
     }
 
