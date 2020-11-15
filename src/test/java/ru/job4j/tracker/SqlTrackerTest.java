@@ -30,29 +30,36 @@ public class SqlTrackerTest {
     @Test
     public void createItem() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.add(new Item("desc"));
-            assertThat(tracker.findByName("desc").size(), is(1));
+            Item item = new Item("Petr");
+            tracker.add(item);
+            assertThat(tracker.findByName("Petr").size(), is(2));
         }
     }
 
     @Test
     public void findById() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            assertThat(tracker.findById("22").getName(), is("Vasya"));
+            Item item = new Item("Petr");
+            tracker.add(item);
+            assertThat(tracker.findById(item.getId()).getName(), is("Petr"));
         }
     }
 
     @Test
     public void deleteItem() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            assertTrue(tracker.delete("22"));
+            Item item = new Item("Petr");
+            tracker.add(item);
+            assertTrue(tracker.delete(item.getId()));
         }
     }
 
     @Test
     public void replace() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            assertTrue(tracker.replace("22", new Item("Vasili")));
+            Item item = new Item("Petr");
+            tracker.add(item);
+            assertTrue(tracker.replace(item.getId(), new Item("Vasili")));
         }
     }
 }
